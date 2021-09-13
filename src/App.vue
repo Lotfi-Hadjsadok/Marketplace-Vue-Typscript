@@ -7,9 +7,6 @@
 
     <v-main>
       <router-view />
-      <v-btn color="success" @click="getData">more data</v-btn>
-      {{ userError ? userError : "no error" }}
-      {{ user ? user.email : "no user" }}
     </v-main>
   </v-app>
 </template>
