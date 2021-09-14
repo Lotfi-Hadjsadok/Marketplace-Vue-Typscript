@@ -23,11 +23,7 @@ export default Vue.extend({
   mounted() {
     store.dispatch("productsStateInit");
   },
-  methods: {
-    getData() {
-      store.dispatch("fetchProducts");
-    },
-  },
+  methods: {},
   data: () => ({
     //
   }),
@@ -36,3 +32,16 @@ export default Vue.extend({
   },
 });
 </script>
+<style>
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+input[type="number"]:focus {
+  outline: none;
+}
+</style>

@@ -61,6 +61,18 @@ const actions: ActionTree<UserState, RootState> = {
                 commit('SET_USER_ERROR', err)
             })
     },
+    logoutUser: async ({ commit }) => {
+        commit('SET_USER_LOADING', true)
+        await auth.signOut().then(() => {
+            commit('SET_USER', null)
+            commit('SET_USER_LOADING', false)
+            router.push('/login')
+        })
+            .catch((err) => {
+                commit('SET_USER_LOADING', false)
+                commit('SET_USER_ERROR', err)
+            })
+    }
 }
 export const Auth: Module<any, RootState> = {
     state,

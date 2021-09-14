@@ -2,46 +2,56 @@
   <div>
     <main-carousal />
     <v-container max-width="1200px">
-      <v-row>
-        <v-col cols="6" md="4" lg="3" xl="2" v-for="i in 25" :key="i">
-          <div>
-            <v-card align="center">
-              <v-img
-                @click="toProduct()"
-                src="https://shopping-express.raysel-revolution.com/wp-content/uploads/sites/9/2021/08/3-600x600.jpg"
-              ></v-img>
-
-              <v-card-text>
-                <h1 class="title primary--text">productTitle</h1>
-              </v-card-text>
-              <v-card-text>
-                <v-row class="mt-n10">
-                  <v-col>Category</v-col>
-                </v-row>
-                <v-row class="mt-n5">
-                  <v-col class="primary--text text-h6">3500 da</v-col>
-                </v-row>
-              </v-card-text>
-              <v-card-actions>
-                <v-btn color="primary" icon>
-                  <v-icon>mdi-cart</v-icon>
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </div>
+      <v-row v-if="products">
+        <v-col
+          cols="6"
+          md="4"
+          lg="3"
+          xl="2"
+          v-for="product in products"
+          :key="product.id"
+        >
+          <products-card :product="product" />
         </v-col>
       </v-row>
+      <v-row v-if="productsLoader || products.length == 0">
+        <v-col v-for="item in left" :key="item" cols="6" xl="2" sm="4" md="3">
+          <v-skeleton-loader
+            type="image,list-item-two-line,actions"
+            :types="{ actions: 'avatar' }"
+          ></v-skeleton-loader>
+        </v-col>
+      </v-row>
+      <v-btn
+        class="mt-5"
+        v-if="left && products.length"
+        @click="fetchProducts"
+        color="primary"
+      >
+        Voir plus
+        <v-icon right>mdi-chevron-right</v-icon>
+      </v-btn>
     </v-container>
   </div>
 </template>
 <script lang="ts">
 import MainCarousal from "@/components/MainCarousal.vue";
+import ProductsCard from "@/components/ProductsCard.vue";
 import Vue from "vue";
+import { mapActions, mapGetters } from "vuex";
 export default Vue.extend({
-  components: { MainCarousal },
+  components: { MainCarousal, ProductsCard },
+
   methods: {
-    toProduct() {
-      this.$router.push("/login");
+    ...mapActions(["fetchProducts"]),
+  },
+  computed: {
+    ...mapGetters(["products", "productsCount", "productsLoader"]),
+    left() {
+      if (!this.products.length) return 12;
+      var productLeft: number = this.productsCount - this.products.length;
+      if (productLeft > 12) return 12;
+      return productLeft;
     },
   },
 });

@@ -5,6 +5,7 @@ import { productsState, productType } from "./types";
 
 const state = <productsState>{
     products: [],
+    productById: null,
     productsError: '',
     productsLoader: false,
     productsCount: 0,
@@ -14,12 +15,15 @@ const state = <productsState>{
 
 const getters = <GetterTree<productsState, RootState>>{
     products: state => state.products,
+    productById: state => state.productById,
     productsError: state => state.productsError,
-    productsLoader: state => state.productsLoader
+    productsLoader: state => state.productsLoader,
+    productsCount: state => state.productsCount
 }
 
 const mutations = <MutationTree<productsState>>{
     SET_PRODUCTS: (state, payload: Array<productType>) => state.products.push(...payload),
+    SET_PRODUCT_BY_ID: (state, payload: productType) => state.productById = payload,
     SET_PRODUCTS_ERROR: (state, payload: string) => state.productsError = payload,
     SET_PRODUCTS_LOADER: (state, payload: boolean) => state.productsLoader = payload,
     SET_LAST_PRODUCT: (state, payload) => state.lastProduct = payload,
@@ -28,7 +32,6 @@ const mutations = <MutationTree<productsState>>{
 
 const actions = <ActionTree<productsState, RootState>>{
     fetchProducts: async ({ commit, state }) => {
-
         if (state.products?.length <= state.productsCount) { /// test before start
             commit('SET_PRODUCTS_LOADER', true)
             await db.collection('products').orderBy('createdAt').startAfter(state.lastProduct).limit(12).get().then(docs => {
@@ -47,6 +50,19 @@ const actions = <ActionTree<productsState, RootState>>{
                 })
         }
 
+    },
+    getProductById: async ({ commit }, payload: string) => {
+        commit('SET_PRODUCTS_LOADER', true)
+        await db.collection('products').doc(payload).get().then(
+            query => {
+                commit('SET_PRODUCT_BY_ID', query.data())
+                commit('SET_PRODUCTS_LOADER', false)
+            }
+        )
+            .catch((err) => {
+                commit('SET_PRODUCTS_LOADER', false)
+                commit('SET_PRODUCTS_ERROR', err)
+            })
     },
     productsStateInit: async ({ commit, dispatch }) => {
         await db.collection('stats').doc('--products--').get().then(query => {

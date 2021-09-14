@@ -1,3 +1,4 @@
+import { Cart } from './modules/cart/cart';
 import { Products } from './modules/products/products';
 import { Auth } from './modules/user/user';
 import Vue from 'vue'
@@ -17,7 +18,15 @@ export const userLocal = createPersistedState<any>({
   },
   paths: ['Auth.user']
 })
-
+export const cartLocal = createPersistedState<any>({
+  key: 'cart',
+  storage: {
+    getItem: (key) => ls.get(key),
+    setItem: (key, value) => ls.set(key, value),
+    removeItem: (key) => ls.remove(key),
+  },
+  paths: ['Cart.cart']
+})
 
 
 
@@ -26,11 +35,12 @@ export const userLocal = createPersistedState<any>({
 Vue.use(Vuex)
 
 const store: StoreOptions<RootState> = ({
-  plugins: [userLocal],
+  plugins: [userLocal, cartLocal],
 
   modules: {
     Auth,
-    Products
+    Products,
+    Cart
   }
 })
 export default new Vuex.Store(store)

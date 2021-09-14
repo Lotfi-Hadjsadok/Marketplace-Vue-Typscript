@@ -1,5 +1,6 @@
 export type productType = {
     id: string,
+    category: string,
     title: string,
     image: string,
     images?: Array<string>,
@@ -9,6 +10,7 @@ export type productType = {
 }
 export interface productsState {
     products: Array<productType>,
+    productById: productType | null,
     productsLoader: boolean,
     productsError: string,
     productsCount: number,
