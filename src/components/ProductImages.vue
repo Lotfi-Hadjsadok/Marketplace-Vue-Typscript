@@ -25,21 +25,18 @@
   </v-card>
 </template>
 <script lang="ts">
-import Vue from 'vue'
+import Vue from "vue";
 export default Vue.extend({
-      props:['images'],
+  props: ["images"],
   data() {
     return {
       imgIndex: 0,
     };
   },
   methods: {
-    slide(i:any) {
+    slide(i: any) {
       this.imgIndex = i;
     },
   },
-};
-
-
-})
+});
 </script>

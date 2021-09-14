@@ -6,6 +6,8 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Product from '../views/Product.vue'
+import AdminDashboard from '../views/admin/Dashboard.vue'
+import Stats from '../views/admin/Stats.vue'
 
 Vue.use(VueRouter)
 
@@ -19,12 +21,18 @@ const routes: Array<RouteConfig> = [
     component: Home
   },
   {
-    path: '/admin/dashboard',
-    name: 'admin-dashboard',
+    path: '/admin',
     meta: {
       requiresAdmin: true,
     },
-    component: Home
+    component: AdminDashboard,
+    children: [
+      {
+        path: '/',
+        name: 'admin-dashboard',
+        component: Stats
+      }
+    ]
   },
   {
     path: '/product/:id',

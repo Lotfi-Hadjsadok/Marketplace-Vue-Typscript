@@ -138,7 +138,6 @@ export default Vue.extend({
     },
   },
   mounted() {
-    console.log(this.cart);
     const productId = this.$route.params.id;
     store.dispatch("getProductById", productId.toString());
   },

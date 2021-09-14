@@ -2,7 +2,11 @@
   <div v-if="userLoading"></div>
   <v-app v-else style="background-color: #f1f1f1">
     <nav-bar
-      v-if="this.$route.name != 'login' && this.$route.name != 'register'"
+      v-if="
+        this.$route.name != 'login' &&
+        this.$route.name != 'register' &&
+        !this.$route.path.includes('/admin')
+      "
     />
 
     <v-main>
