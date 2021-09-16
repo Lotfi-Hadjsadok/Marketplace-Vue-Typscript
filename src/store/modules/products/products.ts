@@ -2,6 +2,7 @@ import { db } from './../../../firebase';
 import { RootState } from './../../types';
 import { ActionTree, GetterTree, Module, MutationTree } from 'vuex';
 import { productsState, productType } from "./types";
+import router from '@/router';
 
 const state = <productsState>{
     products: [],
@@ -51,12 +52,19 @@ const actions = <ActionTree<productsState, RootState>>{
         }
 
     },
-    getProductById: async ({ commit }, payload: string) => {
+    getProductById: async ({ commit }, payload: { id: string, title: string }) => {
         commit('SET_PRODUCTS_LOADER', true)
-        await db.collection('products').doc(payload).get().then(
-            query => {
-                commit('SET_PRODUCT_BY_ID', query.data())
-                commit('SET_PRODUCTS_LOADER', false)
+        await db.collection('products').where('title', '==', payload.title).where('id', '==', payload.id).get().then(
+            docs => {
+                if (docs.empty) {
+                    router.replace('/404')
+                    return
+                }
+                docs.forEach(doc => {
+                    commit('SET_PRODUCT_BY_ID', doc.data())
+                    commit('SET_PRODUCTS_LOADER', false)
+                })
+
             }
         )
             .catch((err) => {

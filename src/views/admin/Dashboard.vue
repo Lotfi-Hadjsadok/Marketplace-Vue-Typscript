@@ -1,5 +1,21 @@
 <template>
   <div>
+    <!-- AppBar -->
+    <v-app-bar app flat>
+      <v-btn
+        v-if="mobile"
+        @click="drawer = !drawer"
+        icon
+        height="35"
+        width="35"
+        color="black"
+      >
+        <v-icon>mdi-dots-vertical</v-icon>
+      </v-btn>
+      <v-toolbar-title class="subtitle-1">{{ title }}</v-toolbar-title>
+    </v-app-bar>
+
+    <!-- Drawer -->
     <v-navigation-drawer :permanent="!mobile" v-model="drawer" width="230" app>
       <v-list>
         <v-list-item class="px-2 d-flex justify-center">
@@ -49,7 +65,7 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-btn color="success" absolute @click="drawer = !drawer">text</v-btn>
+
     <router-view></router-view>
   </div>
 </template>
@@ -60,7 +76,11 @@ import { mapGetters } from "vuex";
 export default Vue.extend({
   data: () => ({
     drawer: false,
+    title: "",
   }),
+  mounted() {
+    this.title = this.$route.meta?.title;
+  },
   computed: {
     ...mapGetters(["user"]),
     mobile() {

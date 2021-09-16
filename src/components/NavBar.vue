@@ -90,6 +90,7 @@ export default Vue.extend({
     drawer: false as boolean,
     cartDrawer: false as boolean,
   }),
+
   computed: {
     ...mapGetters(["cart"]),
     cartCount() {

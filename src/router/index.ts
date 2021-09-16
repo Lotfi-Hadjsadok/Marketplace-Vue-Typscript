@@ -6,6 +6,7 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Product from '../views/Product.vue'
+import NotFound from '../views/NotFound.vue'
 import AdminDashboard from '../views/admin/Dashboard.vue'
 import Stats from '../views/admin/Stats.vue'
 
@@ -20,6 +21,7 @@ const routes: Array<RouteConfig> = [
     },
     component: Home
   },
+
   {
     path: '/admin',
     meta: {
@@ -29,22 +31,26 @@ const routes: Array<RouteConfig> = [
     children: [
       {
         path: '/',
+        meta: {
+          title: 'Dashboard'
+        },
         name: 'admin-dashboard',
         component: Stats
       }
     ]
   },
+
   {
-    path: '/product/:id',
-    name: 'product',
+    path: '/product/:uid/:id/:title',
+    name: 'product-employee',
     meta: {
       requiresAuth: true,
     },
     component: Product
   },
   {
-    path: '/product/:uid/:id',
-    name: 'product-employee',
+    path: '/product/:id/:title',
+    name: 'product',
     meta: {
       requiresAuth: true,
     },
@@ -67,11 +73,16 @@ const routes: Array<RouteConfig> = [
     component: Register
   },
   {
-    path: '*',
+    path: '/404',
     name: 'not-found',
     meta: {
-      requiresAuth: true
-    }
+      requiresAuth: true,
+    },
+    component: NotFound
+  },
+  {
+    path: '/:catchAll(.*)',
+    redirect: '/404'
   }
 
 ]
@@ -82,6 +93,7 @@ const router = new VueRouter({
   routes
 })
 router.beforeEach((to, from, next) => {
+
   if (to.matched.some(record => record.meta.requiresAdmin)) {
     if (auth.currentUser) {
       const user = store.getters.user;

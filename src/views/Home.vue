@@ -41,7 +41,11 @@ import Vue from "vue";
 import { mapActions, mapGetters } from "vuex";
 export default Vue.extend({
   components: { MainCarousal, ProductsCard },
-
+  metaInfo() {
+    return {
+      title: "Accueil",
+    };
+  },
   methods: {
     ...mapActions(["fetchProducts"]),
   },

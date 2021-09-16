@@ -24,6 +24,11 @@ import store from "./store";
 export default Vue.extend({
   components: { NavBar },
   name: "App",
+  metaInfo() {
+    return {
+      titleTemplate: "Raysel Shop | %s",
+    };
+  },
   mounted() {
     store.dispatch("productsStateInit");
   },

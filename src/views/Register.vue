@@ -48,6 +48,11 @@
 <script lang="ts">
 import Vue from "vue";
 export default Vue.extend({
+  metaInfo() {
+    return {
+      title: "Inscription",
+    };
+  },
   data: () => ({
     user: {
       name: "" as string,

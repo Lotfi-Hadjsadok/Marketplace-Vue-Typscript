@@ -36,12 +36,7 @@
               </v-row>
 
               <v-row class="white mt-5">
-                <v-col cols="12">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Quia, eveniet harum. Totam blanditiis sunt autem ex sint
-                  voluptate nostrum perspiciatis porro voluptates corrupti,
-                  quaerat, veritatis, deleniti iure vel nisi asperiores.
-                </v-col>
+                <v-col cols="12" v-html="productById.description"> </v-col>
                 <v-row class="ma-2" align="center">
                   <v-col class="d-flex">
                     <v-card
@@ -104,6 +99,11 @@ import Vue from "vue";
 import { mapActions, mapGetters } from "vuex";
 export default Vue.extend({
   components: { ProductImages },
+  metaInfo() {
+    return {
+      title: this.$route.params.title.replace(/-/g, " "),
+    };
+  },
   data() {
     return {
       quantity: 1,
@@ -138,8 +138,9 @@ export default Vue.extend({
     },
   },
   mounted() {
-    const productId = this.$route.params.id;
-    store.dispatch("getProductById", productId.toString());
+    const id = this.$route.params.id;
+    const title = this.$route.params.title.replace(/-/g, " ");
+    store.dispatch("getProductById", { id, title });
   },
   computed: {
     ...mapGetters(["productById", "user", "cart"]),

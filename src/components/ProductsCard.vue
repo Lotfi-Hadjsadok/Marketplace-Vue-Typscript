@@ -4,25 +4,37 @@
       <router-link
         :to="
           user.role == 'client'
-            ? { name: 'product', params: { id: product.id } }
+            ? {
+                name: 'product',
+                params: { id: product.id, title: titleToRoute },
+              }
             : {
                 name: 'product-employee',
-                params: { uid: user.uid, id: product.id },
+                params: {
+                  uid: user.uid,
+                  id: product.id,
+                  title: titleToRoute,
+                },
               }
         "
       >
-        <v-img
-          src="https://shopping-express.raysel-revolution.com/wp-content/uploads/sites/9/2021/08/3-600x600.jpg"
-        ></v-img>
+        <v-img :src="product.image"></v-img>
       </router-link>
       <router-link
         class="text-decoration-none"
         :to="
           user.role == 'client'
-            ? { name: 'product', params: { id: product.id } }
+            ? {
+                name: 'product',
+                params: { id: product.id, title: titleToRoute },
+              }
             : {
                 name: 'product-employee',
-                params: { uid: user.uid, id: product.id },
+                params: {
+                  uid: user.uid,
+                  id: product.id,
+                  title: titleToRoute,
+                },
               }
         "
       >
@@ -76,6 +88,9 @@ export default Vue.extend({
   },
   computed: {
     ...mapGetters(["user"]),
+    titleToRoute(): string {
+      return this.product.title.replace(/\s/g, "-");
+    },
   },
   methods: {
     ...mapActions(["addCartItem", "removeCartItem"]),

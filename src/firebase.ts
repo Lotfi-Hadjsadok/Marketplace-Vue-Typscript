@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import firebase from "firebase/compat/app";
-
+import faker from 'faker'
 import 'firebase/compat/firestore'
 import 'firebase/compat/auth'
 // TODO: Add SDKs for Firebase products that you want to use
@@ -21,6 +21,26 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = firebase.initializeApp(firebaseConfig);
 export const db = firebase.firestore()
+
+// const data = ["https://shopping-express.raysel-revolution.com/wp-content/uploads/sites/9/2021/08/3.jpg", 'https://shopping-express.raysel-revolution.com/wp-content/uploads/sites/9/2021/08/3.jpg', 'https://shopping-express.raysel-revolution.com/wp-content/uploads/sites/9/2021/08/3.jpg']
+// for (let i = 0; i < 30; i++) {
+//     const id = db.collection('products').doc().id
+//     const batch = db.batch()
+//     batch.set(db.collection('products').doc(id), {
+//         id: id,
+//         commission: 200,
+//         images: data,
+//         description: faker.random.words(100),
+//         store: faker.random.alphaNumeric(10),
+//         title: faker.name.firstName(),
+//         price: faker.datatype.number(500),
+//         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+//         category: faker.random.alpha({ count: 10 }),
+//         image: faker.image.image(),
+//     })
+//     batch.set(db.collection('stats').doc('--products--'), { count: firebase.firestore.FieldValue.increment(1) }, { merge: true })
+//     batch.commit()
+// }
 export const auth = firebase.auth()
 export default app
 
