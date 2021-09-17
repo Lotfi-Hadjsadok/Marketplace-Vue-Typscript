@@ -10,7 +10,7 @@ import SecureLS from 'secure-ls';
 const ls = new SecureLS({ isCompression: false });
 
 export const userLocal = createPersistedState<any>({
-  key: 'user',
+  key: 'rv_user',
   storage: {
     getItem: (key) => ls.get(key),
     setItem: (key, value) => ls.set(key, value),
@@ -19,7 +19,7 @@ export const userLocal = createPersistedState<any>({
   paths: ['Auth.user']
 })
 export const cartLocal = createPersistedState<any>({
-  key: 'cart',
+  key: 'rv_cart',
   storage: {
     getItem: (key) => ls.get(key),
     setItem: (key, value) => ls.set(key, value),

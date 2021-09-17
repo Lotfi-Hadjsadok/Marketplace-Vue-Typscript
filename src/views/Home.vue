@@ -24,7 +24,7 @@
       </v-row>
       <v-btn
         class="mt-5"
-        v-if="left && products.length"
+        v-if="left && products.length && !productsLoader"
         @click="fetchProducts"
         color="primary"
       >

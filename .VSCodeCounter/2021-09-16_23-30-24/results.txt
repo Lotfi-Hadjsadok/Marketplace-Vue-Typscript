@@ -1,0 +1,82 @@
+Date : 2021-09-16 23:30:24
+Directory : /Users/mac/Desktop/ts-vue-marketplace
+Total : 37 files,  15644 codes, 40 comments, 134 blanks, all 15818 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JSON       |          3 |     14,226 |         11 |          3 |     14,240 |
+| Vue        |         12 |        852 |          1 |         55 |        908 |
+| TypeScript |         15 |        495 |         27 |         62 |        584 |
+| JavaScript |          3 |         28 |          0 |          3 |         31 |
+| HTML       |          1 |         21 |          1 |          3 |         25 |
+| Markdown   |          1 |         19 |          0 |          6 |         25 |
+| SCSS       |          1 |          2 |          0 |          1 |          3 |
+| XML        |          1 |          1 |          0 |          1 |          2 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                         | files      | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                            |         37 |     15,644 |         40 |        134 |     15,818 |
+| public                                                                       |          1 |         21 |          1 |          3 |         25 |
+| src                                                                          |         29 |      1,350 |         28 |        119 |      1,497 |
+| src/assets                                                                   |          1 |          1 |          0 |          1 |          2 |
+| src/components                                                               |          4 |        342 |          0 |         24 |        366 |
+| src/plugins                                                                  |          1 |         20 |          0 |          2 |         22 |
+| src/router                                                                   |          1 |        137 |          0 |         11 |        148 |
+| src/sass                                                                     |          1 |          2 |          0 |          1 |          3 |
+| src/store                                                                    |          8 |        282 |          0 |         36 |        318 |
+| src/store/modules                                                            |          6 |        242 |          0 |         24 |        266 |
+| src/store/modules/cart                                                       |          2 |         55 |          0 |          7 |         62 |
+| src/store/modules/products                                                   |          2 |         97 |          0 |          7 |        104 |
+| src/store/modules/user                                                       |          2 |         90 |          0 |         10 |        100 |
+| src/views                                                                    |          7 |        458 |          0 |         27 |        485 |
+| src/views/admin                                                              |          2 |         95 |          0 |          9 |        104 |
++------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                     | language   | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| /Users/mac/Desktop/ts-vue-marketplace/.eslintrc.js                           | JavaScript |         18 |          0 |          1 |         19 |
+| /Users/mac/Desktop/ts-vue-marketplace/README.md                              | Markdown   |         19 |          0 |          6 |         25 |
+| /Users/mac/Desktop/ts-vue-marketplace/babel.config.js                        | JavaScript |          5 |          0 |          1 |          6 |
+| /Users/mac/Desktop/ts-vue-marketplace/package-lock.json                      | JSON       |     14,151 |          0 |          1 |     14,152 |
+| /Users/mac/Desktop/ts-vue-marketplace/package.json                           | JSON       |         46 |          0 |          1 |         47 |
+| /Users/mac/Desktop/ts-vue-marketplace/public/index.html                      | HTML       |         21 |          1 |          3 |         25 |
+| /Users/mac/Desktop/ts-vue-marketplace/src/App.vue                            | Vue        |         52 |          1 |          4 |         57 |
+| /Users/mac/Desktop/ts-vue-marketplace/src/assets/logo.svg                    | XML        |          1 |          0 |          1 |          2 |
+| /Users/mac/Desktop/ts-vue-marketplace/src/components/MainCarousal.vue        | Vue        |         25 |          0 |          2 |         27 |
+| /Users/mac/Desktop/ts-vue-marketplace/src/components/NavBar.vue              | Vue        |        158 |          0 |         16 |        174 |
+| /Users/mac/Desktop/ts-vue-marketplace/src/components/ProductImages.vue       | Vue        |         42 |          0 |          1 |         43 |
+| /Users/mac/Desktop/ts-vue-marketplace/src/components/ProductsCard.vue        | Vue        |        117 |          0 |          5 |        122 |
+| /Users/mac/Desktop/ts-vue-marketplace/src/firebase.ts                        | TypeScript |         17 |         25 |          5 |         47 |
+| /Users/mac/Desktop/ts-vue-marketplace/src/main.ts                            | TypeScript |         21 |          0 |          4 |         25 |
+| /Users/mac/Desktop/ts-vue-marketplace/src/plugins/vuetify.ts                 | TypeScript |         20 |          0 |          2 |         22 |
+| /Users/mac/Desktop/ts-vue-marketplace/src/router/index.ts                    | TypeScript |        137 |          0 |         11 |        148 |
+| /Users/mac/Desktop/ts-vue-marketplace/src/sass/variables.scss                | SCSS       |          2 |          0 |          1 |          3 |
+| /Users/mac/Desktop/ts-vue-marketplace/src/shims-tsx.d.ts                     | TypeScript |         10 |          2 |          2 |         14 |
+| /Users/mac/Desktop/ts-vue-marketplace/src/shims-vue.d.ts                     | TypeScript |          4 |          0 |          1 |          5 |
+| /Users/mac/Desktop/ts-vue-marketplace/src/shims-vuetify.d.ts                 | TypeScript |          4 |          0 |          1 |          5 |
+| /Users/mac/Desktop/ts-vue-marketplace/src/store/index.ts                     | TypeScript |         37 |          0 |          9 |         46 |
+| /Users/mac/Desktop/ts-vue-marketplace/src/store/modules/cart/cart.ts         | TypeScript |         47 |          0 |          6 |         53 |
+| /Users/mac/Desktop/ts-vue-marketplace/src/store/modules/cart/types.ts        | TypeScript |          8 |          0 |          1 |          9 |
+| /Users/mac/Desktop/ts-vue-marketplace/src/store/modules/products/products.ts | TypeScript |         78 |          0 |          7 |         85 |
+| /Users/mac/Desktop/ts-vue-marketplace/src/store/modules/products/types.ts    | TypeScript |         19 |          0 |          0 |         19 |
+| /Users/mac/Desktop/ts-vue-marketplace/src/store/modules/user/types.ts        | TypeScript |         11 |          0 |          5 |         16 |
+| /Users/mac/Desktop/ts-vue-marketplace/src/store/modules/user/user.ts         | TypeScript |         79 |          0 |          5 |         84 |
+| /Users/mac/Desktop/ts-vue-marketplace/src/store/types.ts                     | TypeScript |          3 |          0 |          3 |          6 |
+| /Users/mac/Desktop/ts-vue-marketplace/src/views/Home.vue                     | Vue        |         64 |          0 |          0 |         64 |
+| /Users/mac/Desktop/ts-vue-marketplace/src/views/Login.vue                    | Vue        |         67 |          0 |          5 |         72 |
+| /Users/mac/Desktop/ts-vue-marketplace/src/views/NotFound.vue                 | Vue        |         22 |          0 |          2 |         24 |
+| /Users/mac/Desktop/ts-vue-marketplace/src/views/Product.vue                  | Vue        |        142 |          0 |          7 |        149 |
+| /Users/mac/Desktop/ts-vue-marketplace/src/views/Register.vue                 | Vue        |         68 |          0 |          4 |         72 |
+| /Users/mac/Desktop/ts-vue-marketplace/src/views/admin/Dashboard.vue          | Vue        |         87 |          0 |          7 |         94 |
+| /Users/mac/Desktop/ts-vue-marketplace/src/views/admin/Stats.vue              | Vue        |          8 |          0 |          2 |         10 |
+| /Users/mac/Desktop/ts-vue-marketplace/tsconfig.json                          | JSON       |         29 |         11 |          1 |         41 |
+| /Users/mac/Desktop/ts-vue-marketplace/vue.config.js                          | JavaScript |          5 |          0 |          1 |          6 |
+| Total                                                                        |            |     15,644 |         40 |        134 |     15,818 |
++------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

@@ -56,6 +56,7 @@
             </v-btn>
           </v-col>
         </v-row>
+        <div v-if="!cart.length">Aucun produit</div>
         <div v-for="(item, index) in cart" :key="index">
           <v-row dense class="mt-5" align="center">
             <v-col class="white" cols="2">
@@ -77,22 +78,129 @@
             <v-divider></v-divider>
           </v-row>
         </div>
+        <v-row class="mt-5" v-if="cart.length > 0">
+          <v-col>
+            <v-btn block @click="initOrder" color="primary"
+              >Valider vos achats</v-btn
+            >
+          </v-col>
+        </v-row>
       </v-list>
     </v-navigation-drawer>
+
+    <!-- Order Popup -->
+
+    <div class="text-center">
+      <v-dialog v-model="orderPopup" max-width="500">
+        <v-card>
+          <v-card-title class="text-h5 grey lighten-2">
+            Validation de la commande
+          </v-card-title>
+
+          <v-card-text class="mt-4">
+            <v-container>
+            <v-row>
+              <v-col
+                cols="6"
+                sm="6"
+              >
+                <v-text-field
+                append-icon="mdi-account"
+                  label="Nom"
+                  v-model="name"
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col
+                cols="6"
+                sm="6"
+                
+              >
+                <v-text-field
+                append-icon="mdi-account"
+                  label="Prénom"
+                    v-model="name"
+                  required
+                  
+                ></v-text-field>
+              </v-col>
+            
+              <v-col cols="12">
+                <v-text-field
+                  label="Numéro de téléphone"
+                    v-model="phone"
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col
+                cols="12"
+               
+              >
+                <v-select
+                  :items="['0-17', '18-29', '30-54', '54+']"
+                  label="Wilaya"
+                    v-model="state"
+                  required
+                ></v-select>
+              </v-col>
+              <v-col
+                cols="12"
+               
+              >
+                <v-select
+                  v-model="city"
+                
+                  :items="['0-17', '18-29', '30-54', '54+']"
+                  label="Commune"
+                  required
+                ></v-select>
+              </v-col>
+                 <v-col cols="12">
+                <v-text-field
+                  label="Adresse compléte"
+                    v-model="full"
+                  required
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-container>
+          
+          </v-card-text>
+
+          <v-divider></v-divider>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" text @click="Order">
+              Commander
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
+import { db } from "@/firebase";
 import Vue from "vue";
+import {orderType} from '../globalTypes/Order'
 import { mapActions, mapGetters } from "vuex";
 export default Vue.extend({
   data: () => ({
+    name:'' as string,
+    full:'' as string,
+    city:'' as string,
+    state:'' as string,
+    phone:'' as string,
+    order:null as orderType,
     drawer: false as boolean,
     cartDrawer: false as boolean,
+    orderPopup: false,
   }),
 
   computed: {
-    ...mapGetters(["cart"]),
+    ...mapGetters(["cart","user"]),
     cartCount() {
       let quantity = 0;
       this.cart.forEach((item: any) => {
@@ -105,6 +213,30 @@ export default Vue.extend({
     ...mapActions(["logoutUser", "removeCartItem"]),
     logout() {
       this.logoutUser();
+    },
+    Order(){
+      let product:any = []
+      this.cart.forEach((item:any) => product.push({id:item.product.id,uid:item.uid,title:item.product.title,price:item.product.price,image:item.product.image}))
+      console.log(this.cart)
+      db.collection('orders').add(
+        {
+          uid:this.user.uid,
+          username:this.user.name,
+          products:product,
+          email:this.user.email,
+          adresse:{
+            state:this.state,
+            city:this.city,
+            full:this.full
+          },
+          phone:this.phone
+        }
+      )
+      this.orderPopup = false
+    },
+    initOrder() {
+      this.cartDrawer = false;
+      this.orderPopup = true;
     },
   },
 });

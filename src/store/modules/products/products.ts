@@ -56,10 +56,7 @@ const actions = <ActionTree<productsState, RootState>>{
         commit('SET_PRODUCTS_LOADER', true)
         await db.collection('products').where('title', '==', payload.title).where('id', '==', payload.id).get().then(
             docs => {
-                if (docs.empty) {
-                    router.replace('/404')
-                    return
-                }
+                if (docs.empty)  return router.replace('/404')
                 docs.forEach(doc => {
                     commit('SET_PRODUCT_BY_ID', doc.data())
                     commit('SET_PRODUCTS_LOADER', false)
