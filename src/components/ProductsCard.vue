@@ -51,7 +51,21 @@
         </v-row>
       </v-card-text>
       <v-card-actions>
-        <v-btn @click="addToCart(product)" color="primary" icon>
+        <v-btn
+          @click="
+            addToCart({
+              id: product.id,
+              store: product.store,
+              title: product.title,
+              price: product.price,
+              image: product.image,
+              uid: null,
+              quantity: 1,
+            })
+          "
+          color="primary"
+          icon
+        >
           <v-icon>mdi-cart</v-icon>
         </v-btn>
       </v-card-actions>
@@ -74,6 +88,7 @@
 </template>
 
 <script lang="ts">
+import { cartType } from "@/store/modules/cart/types";
 import { productType } from "@/store/modules/products/types";
 import Vue, { PropType } from "vue";
 import { mapActions, mapGetters } from "vuex";
@@ -94,12 +109,11 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions(["addCartItem", "removeCartItem"]),
-    addToCart(product: productType) {
+    addToCart(payload: cartType) {
       if (this.user.role == "employee") {
-        this.addCartItem({ product, quantity: 1, uid: this.user.uid });
-      } else {
-        this.addCartItem({ product, quantity: 1, uid: null });
+        payload.uid = this.user.uid;
       }
+      this.addCartItem(payload);
 
       this.snackbar = true;
     },

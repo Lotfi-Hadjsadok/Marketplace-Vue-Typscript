@@ -60,13 +60,11 @@
         <div v-for="(item, index) in cart" :key="index">
           <v-row dense class="mt-5" align="center">
             <v-col class="white" cols="2">
-              <v-img :src="item.product.image"></v-img>
+              <v-img :src="item.image"></v-img>
             </v-col>
-            <v-col cols="5" class="text-subtitle-2">{{
-              item.product.title
-            }}</v-col>
+            <v-col cols="5" class="text-subtitle-2">{{ item.title }}</v-col>
             <v-col cols="4" class="text-subtitle-2"
-              >{{ item.product.price }} x {{ item.quantity }}</v-col
+              >{{ item.price }} x {{ item.quantity }}</v-col
             >
             <v-col cols="1">
               <v-btn @click="removeCartItem(item)" align="left" x-small icon>
@@ -99,79 +97,63 @@
 
           <v-card-text class="mt-4">
             <v-container>
-            <v-row>
-              <v-col
-                cols="6"
-                sm="6"
-              >
-                <v-text-field
-                append-icon="mdi-account"
-                  label="Nom"
-                  v-model="name"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col
-                cols="6"
-                sm="6"
-                
-              >
-                <v-text-field
-                append-icon="mdi-account"
-                  label="Prénom"
+              <v-row>
+                <v-col cols="6" sm="6">
+                  <v-text-field
+                    append-icon="mdi-account"
+                    label="Nom"
                     v-model="name"
-                  required
-                  
-                ></v-text-field>
-              </v-col>
-            
-              <v-col cols="12">
-                <v-text-field
-                  label="Numéro de téléphone"
+                    required
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="6" sm="6">
+                  <v-text-field
+                    append-icon="mdi-account"
+                    label="Prénom"
+                    v-model="name"
+                    required
+                  ></v-text-field>
+                </v-col>
+
+                <v-col cols="12">
+                  <v-text-field
+                    label="Numéro de téléphone"
                     v-model="phone"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-               
-              >
-                <v-select
-                  :items="['0-17', '18-29', '30-54', '54+']"
-                  label="Wilaya"
+                    required
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12">
+                  <v-select
+                    :items="['0-17', '18-29', '30-54', '54+']"
+                    label="Wilaya"
                     v-model="state"
-                  required
-                ></v-select>
-              </v-col>
-              <v-col
-                cols="12"
-               
-              >
-                <v-select
-                  v-model="city"
-                
-                  :items="['0-17', '18-29', '30-54', '54+']"
-                  label="Commune"
-                  required
-                ></v-select>
-              </v-col>
-                 <v-col cols="12">
-                <v-text-field
-                  label="Adresse compléte"
+                    required
+                  ></v-select>
+                </v-col>
+                <v-col cols="12">
+                  <v-select
+                    v-model="city"
+                    :items="['0-17', '18-29', '30-54', '54+']"
+                    label="Commune"
+                    required
+                  ></v-select>
+                </v-col>
+                <v-col cols="12">
+                  <v-text-field
+                    label="Adresse compléte"
                     v-model="full"
-                  required
-                ></v-text-field>
-              </v-col>
-            </v-row>
-          </v-container>
-          
+                    required
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-container>
           </v-card-text>
 
           <v-divider></v-divider>
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" text @click="Order">
+            <v-btn color="primary" text :loading="orderLoader" @click="Order">
               Commander
             </v-btn>
           </v-card-actions>
@@ -184,23 +166,26 @@
 <script lang="ts">
 import { db } from "@/firebase";
 import Vue from "vue";
-import {orderType} from '../globalTypes/Order'
+import { orderType } from "../globalTypes/Order";
 import { mapActions, mapGetters } from "vuex";
 export default Vue.extend({
   data: () => ({
-    name:'' as string,
-    full:'' as string,
-    city:'' as string,
-    state:'' as string,
-    phone:'' as string,
-    order:null as orderType,
+    orderLoader: false as boolean,
+    name: "" as string,
+    full: "" as string,
+    city: "" as string,
+    state: "" as string,
+    phone: "" as string,
+    order: null as orderType,
     drawer: false as boolean,
     cartDrawer: false as boolean,
     orderPopup: false,
   }),
-
+  mounted() {
+    console.log(this.cart);
+  },
   computed: {
-    ...mapGetters(["cart","user"]),
+    ...mapGetters(["cart", "user"]),
     cartCount() {
       let quantity = 0;
       this.cart.forEach((item: any) => {
@@ -214,25 +199,27 @@ export default Vue.extend({
     logout() {
       this.logoutUser();
     },
-    Order(){
-      let product:any = []
-      this.cart.forEach((item:any) => product.push({id:item.product.id,uid:item.uid,title:item.product.title,price:item.product.price,image:item.product.image}))
-      console.log(this.cart)
-      db.collection('orders').add(
-        {
-          uid:this.user.uid,
-          username:this.user.name,
-          products:product,
-          email:this.user.email,
-          adresse:{
-            state:this.state,
-            city:this.city,
-            full:this.full
+    Order() {
+      this.orderLoader = true;
+      db.collection("orders")
+        .add({
+          uid: this.user.uid,
+          name: this.user.name,
+          surname: this.user.name,
+          email: this.user.email,
+          adresse: {
+            state: this.state,
+            city: this.city,
+            full: this.full,
           },
-          phone:this.phone
-        }
-      )
-      this.orderPopup = false
+          phone: this.phone,
+          products: this.cart,
+        })
+        .then(() => {
+          this.orderPopup = false;
+          this.$store.commit("SET_CART_ITEMS", []);
+          this.orderLoader = false;
+        });
     },
     initOrder() {
       this.cartDrawer = false;

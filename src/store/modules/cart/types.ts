@@ -1,6 +1,10 @@
-import { productType } from "../products/types";
-export type cartType={
-    product: productType,
+
+export type cartType = {
+    id: string,
+    store: string,
+    title: string,
+    price: string,
+    image: string,
     uid: string | null,
     quantity: number,
 }

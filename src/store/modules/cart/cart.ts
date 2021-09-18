@@ -1,7 +1,7 @@
 import { productType } from './../products/types';
 import { RootState } from './../../types';
 import { ActionTree, GetterTree, Module, MutationTree } from 'vuex';
-import { cartState } from './types';
+import { cartState, cartType } from './types';
 
 const state = <cartState>{
     cart: []
@@ -17,22 +17,22 @@ const mutations = <MutationTree<cartState>>{
 
 }
 const actions = <ActionTree<cartState, RootState>>{
-    addCartItem: ({ commit, state }, payload: { product: productType, quantity: number, uid: string }) => {
+    addCartItem: ({ commit, state }, payload: cartType) => {
         const newCart = [...state.cart]
-        const index = newCart.findIndex(item => item.product.id === payload.product.id && item.uid === payload.uid)
+        const index = newCart.findIndex(item => item.id === payload.id && item.uid === payload.uid)
         if (index != -1) {
             newCart[index].quantity = newCart[index].quantity + payload.quantity
         } else {
-            newCart.push({ product: payload.product, quantity: payload.quantity, uid: payload.uid })
+            newCart.push(payload)
         }
         commit('SET_CART_ITEMS', newCart)
     },
-    removeCartItem: ({ commit, state }, payload: { product: productType, quantity: number, uid: string }) => {
+    removeCartItem: ({ commit, state }, payload: cartType) => {
         let newCart = [...state.cart]
-        const index = newCart.findIndex(item => item.product.id === payload.product.id && item.uid === payload.uid)
+        const index = newCart.findIndex(item => item.id === payload.id && item.uid === payload.uid)
 
         if (newCart[index]?.quantity == 1) {
-            newCart = newCart.filter(item => item.product.id != payload.product.id || item.uid != payload.uid)
+            newCart = newCart.filter(item => item.id != payload.id || item.uid != payload.uid)
             commit('SET_CART_ITEMS', newCart)
             return
         }

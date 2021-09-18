@@ -60,7 +60,17 @@
 
                     <v-btn
                       class="text-subtitle-2 mr-2"
-                      @click="addToCartEvent(productById, quantity)"
+                      @click="
+                        addToCartEvent({
+                          title: productById.title,
+                          id: productById.id,
+                          store: productById.store,
+                          uid: $route.params.uid ? $route.params.uid : null,
+                          price: productById.price,
+                          quantity,
+                          image: productById.image,
+                        })
+                      "
                       color="primary"
                     >
                       <v-icon left>mdi-cart</v-icon>
@@ -93,6 +103,7 @@
 <script lang="ts">
 import ProductImages from "@/components/ProductImages.vue";
 import store from "@/store";
+import { cartType } from "@/store/modules/cart/types";
 import { productType } from "@/store/modules/products/types";
 
 import Vue from "vue";
@@ -114,12 +125,9 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions(["addCartItem"]),
-    addToCartEvent(product: productType, quantity: number) {
-      if (this.uid) {
-        this.addCartItem({ product, quantity, uid: this.uid });
-      } else {
-        this.addCartItem({ product, quantity, uid: null });
-      }
+    addToCartEvent(payload: cartType) {
+      this.addCartItem(payload);
+
       this.quantity = 1;
       this.snackbar = true;
     },
@@ -138,6 +146,7 @@ export default Vue.extend({
     },
   },
   mounted() {
+    console.log(this.$route.params.uid);
     const id = this.$route.params.id;
     const title = this.$route.params.title.replace(/-/g, " ");
     store.dispatch("getProductById", { id, title });
