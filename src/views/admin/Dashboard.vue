@@ -51,7 +51,7 @@
           </v-list-item-icon>
           <v-list-item-title>Mes produits</v-list-item-title>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item :to="{ name: 'admin-add-product' }" link>
           <v-list-item-icon>
             <v-icon>mdi-cart-plus</v-icon>
           </v-list-item-icon>
@@ -80,6 +80,11 @@ export default Vue.extend({
   }),
   mounted() {
     this.title = this.$route.meta?.title;
+  },
+  watch: {
+    $route() {
+      this.title = this.$route.meta?.title;
+    },
   },
   computed: {
     ...mapGetters(["user"]),

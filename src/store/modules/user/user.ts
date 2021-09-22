@@ -24,20 +24,29 @@ const actions: ActionTree<UserState, RootState> = {
     registerUser: async ({ commit }, register: { email: string, password: string, name: string }) => {
         commit('SET_USER_LOADING', true)
         await auth.createUserWithEmailAndPassword(register.email, register.password).then(
-            data => db.collection('users').doc(data.user?.uid).set({
-                uid: data.user?.uid,
-                name: register.name,
-                email: register.email,
-                role: 'client',
-            }).then(
-                () => {
-                    commit('SET_USER_LOADING', false)
-                    commit('SET_USER', { name: register.name, email: register.email, uid: data.user?.uid, role: 'client' })
-                    commit('SET_USER_ERROR', null)
-                    router.push('/')
-                }
-            )
-        )
+            data => {
+                db.collection('stats').doc(data.user?.uid).set({
+                    products:0,
+                    orders:0,
+                    profit:0
+                    
+                })
+                db.collection('users').doc(data.user?.uid).set({
+                    uid: data.user?.uid,
+                    name: register.name,
+                    email: register.email,
+                    role: 'client',
+                })
+                    .then(
+                        () => {
+                            commit('SET_USER_LOADING', false)
+                            commit('SET_USER', { name: register.name, email: register.email, uid: data.user?.uid, role: 'client' })
+                            commit('SET_USER_ERROR', null)
+                            router.push('/')
+                        }
+                    )
+            })
+
             .catch(err => {
                 commit('SET_USER_LOADING', false)
                 commit('SET_USER_ERROR', err)

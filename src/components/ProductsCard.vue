@@ -18,7 +18,7 @@
               }
         "
       >
-        <v-img :src="product.image"></v-img>
+        <v-img aspect-ratio="1" :src="product.image"></v-img>
       </router-link>
       <router-link
         class="text-decoration-none"
@@ -114,7 +114,6 @@ export default Vue.extend({
         payload.uid = this.user.uid;
       }
       this.addCartItem(payload);
-
       this.snackbar = true;
     },
   },
@@ -129,7 +128,6 @@ export default Vue.extend({
   align-items: center;
   padding: 4px;
   margin-top: 10px;
-
   color: white;
   right: 0;
 }

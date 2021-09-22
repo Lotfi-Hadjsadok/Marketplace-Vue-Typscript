@@ -8,6 +8,7 @@ import Register from '../views/Register.vue'
 import Product from '../views/Product.vue'
 import NotFound from '../views/NotFound.vue'
 import AdminDashboard from '../views/admin/Dashboard.vue'
+import AddProduct from '../views/admin/AddProduct.vue'
 import Stats from '../views/admin/Stats.vue'
 
 Vue.use(VueRouter)
@@ -36,6 +37,14 @@ const routes: Array<RouteConfig> = [
         },
         name: 'admin-dashboard',
         component: Stats
+      },
+      {
+        path: '/admin/add-product',
+        meta: {
+          title: 'Ajouter un produit'
+        },
+        component: AddProduct,
+        name: 'admin-add-product'
       }
     ]
   },
